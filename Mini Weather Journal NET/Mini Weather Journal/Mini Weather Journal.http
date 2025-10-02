@@ -1,0 +1,6 @@
+@Mini_Weather_Journal_HostAddress = http://localhost:5078
+
+GET {{Mini_Weather_Journal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
