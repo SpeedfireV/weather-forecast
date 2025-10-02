@@ -65,6 +65,16 @@ public class WeatherController: ControllerBase
     {
         try
         {
+            if (weatherForecast.Date < DateOnly.FromDateTime(DateTime.Now.Date))
+            {
+                return BadRequest("Date cannot be in the past");
+            }
+
+           
+             if(await _dbContext.WeatherForecasts.AnyAsync(forecast => forecast.Date == weatherForecast.Date))
+                return BadRequest("Date already exists");
+            
+
             _dbContext.WeatherForecasts.Add(weatherForecast);
             await _dbContext.SaveChangesAsync();
             return Created();
@@ -72,7 +82,11 @@ public class WeatherController: ControllerBase
         catch (DbUpdateException e)
         {
             return BadRequest(e.Message);
-        } 
+        }
+        catch (InvalidOperationException e)
+        {
+            return NotFound(e.Message);
+        }
         catch (Exception e)
         {
             return BadRequest(e.Message);

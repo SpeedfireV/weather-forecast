@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
 
 namespace Mini_Weather_Journal.Controllers;
@@ -42,27 +43,49 @@ public class NotesController: ControllerBase
             return BadRequest(e.Message);
         }
     }
-
-    [HttpPost]
-    public async Task<IActionResult> AddWeatherNote([FromQuery] WeatherNote weatherNote)
+    
+    [HttpPut]
+    public async Task<IActionResult> UpdateWeatherNote([FromQuery] int id, [FromQuery] string newSummary)
     {
         try
         {
-            await _dbContext.WeatherNotes.AddAsync(weatherNote);
+            var weatherNote = await _dbContext.WeatherForecasts.FindAsync(id);
+            if (weatherNote == null)
+                return NotFound();
+            weatherNote.Summary = newSummary;
             await _dbContext.SaveChangesAsync();
-            return Created();
-        }
-        catch (InvalidOperationException e)
-        {
-            return NotFound(e.Message);
+            return Ok();
         }
         catch (DbUpdateException e)
         {
             return BadRequest(e.Message);
         }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddWeatherNote(WeatherNoteCreateDto dto)
+    {
+        var note = new WeatherNote
+        {
+            ForecastId = dto.ForecastId,
+            Note = dto.Note,
+            Date = dto.Date
+        };
+
+        try
+        {
+            _dbContext.WeatherNotes.Add(note);
+            await _dbContext.SaveChangesAsync();
+
+            return Created();
+        }
+        catch (DbUpdateException e)
+        {
+            return BadRequest(e.Message); // FK violation or duplicate
+        }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return StatusCode(500, e.Message); // unexpected server error
         }
     }
 }

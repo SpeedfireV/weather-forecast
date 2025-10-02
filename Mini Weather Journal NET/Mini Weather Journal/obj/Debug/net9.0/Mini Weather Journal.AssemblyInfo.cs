@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+187c3e2daed8b2abf1233253cc02baf327e53cbf")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,13 +6,17 @@ namespace Mini_Weather_Journal.Models;
 public class WeatherNote
 {
     public int Id { get; set; }
-    [Required]
-    public int ForecastId { get; set; }
 
+
+    [Required]
     [StringLength(512)]
     public string? Note { get; set; } = null!;
     
+    [Required]
     public DateOnly Date { get; set; }
+    
+    [Required]
+    public int ForecastId { get; set; }
 
-    [ForeignKey(nameof(ForecastId))] [Required] public WeatherForecast Forecast { get; set; } = null!;
+    public WeatherForecast? Forecast { get; set; }
 }
