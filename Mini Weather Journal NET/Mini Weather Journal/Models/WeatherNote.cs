@@ -15,8 +15,6 @@ public class WeatherNote
     [StringLength(512)]
     public string? Note { get; set; } = null!;
     
-    [Required]
-    public DateOnly Date { get; set; }
     
     [Required]
     public int ForecastId { get; set; }

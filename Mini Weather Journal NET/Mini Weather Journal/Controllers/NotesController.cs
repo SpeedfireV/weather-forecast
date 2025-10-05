@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
@@ -9,6 +10,7 @@ namespace Mini_Weather_Journal.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class NotesController: ControllerBase
 {
     private readonly DatabaseContext _dbContext;
@@ -17,16 +19,42 @@ public class NotesController: ControllerBase
         _dbContext = dbContext;
     }
     
+    protected string CurrentUserId => User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+
+    private IActionResult? RequireUser(out string userId)
+    {
+        userId = CurrentUserId;
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized("User not logged in.");
+        }
+        return null;
+    }
+    
     [HttpGet(Name = "GetWeatherNotes")]
     public async Task<IActionResult> GetWeatherNotes()
     {
-        return Ok(_dbContext.WeatherNotes);
+        var unauthorized = RequireUser(out var userId);
+        if (unauthorized != null)
+            return unauthorized;
+        var notes = await _dbContext.WeatherNotes.Where(note => note.UserId == userId).ToListAsync();
+        return Ok(notes);
     }
     
     [HttpGet("date", Name = "GetWeatherNotesByDate")]
     public async Task<IActionResult> GetWeatherNotesByDate([FromQuery] DateOnly date)
     {
-        return Ok(_dbContext.WeatherNotes.Where(note => note.Date == date));
+        try
+        {
+            var unauthorized = RequireUser(out _);
+            if (unauthorized != null)
+                return unauthorized;
+            var forecast = await _dbContext.WeatherForecasts.FirstAsync(forecast => forecast.Date == date);
+            return Ok(_dbContext.WeatherNotes.Where(note => forecast.Date == date));
+        } catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpDelete]
@@ -34,6 +62,9 @@ public class NotesController: ControllerBase
     {
         try
         {
+            var unauthorized = RequireUser(out var userId);
+            if (unauthorized != null)
+                return unauthorized;
             var record = await _dbContext.WeatherNotes.FindAsync(id);
             if (record == null)
                 return NotFound();
@@ -47,14 +78,17 @@ public class NotesController: ControllerBase
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateWeatherNote([FromQuery] int id, [FromQuery] string newSummary)
+    public async Task<IActionResult> UpdateWeatherNote(UpdateWeatherNoteDto dto)
     {
         try
         {
-            var weatherNote = await _dbContext.WeatherForecasts.FindAsync(id);
+            var unauthorized = RequireUser(out var userId);
+            if (unauthorized != null)
+                return unauthorized;
+            var weatherNote = await _dbContext.WeatherNotes.FindAsync(dto.NoteId);
             if (weatherNote == null)
-                return NotFound();
-            weatherNote.Summary = newSummary;
+                return NotFound("Note not found");
+            weatherNote.Note = dto.NewNote;
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
@@ -64,18 +98,16 @@ public class NotesController: ControllerBase
         }
     }
 
-    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddWeatherNote(WeatherNoteCreateDto dto)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null)
-            return Unauthorized("User not logged in.");
+        var unauthorized = RequireUser(out var userId);
+        if (unauthorized != null)
+            return unauthorized;
         var note = new WeatherNote
         {
             ForecastId = dto.ForecastId,
             Note = dto.Note,
-            Date = dto.Date,
             UserId = userId
         };
         try {

@@ -7,7 +7,4 @@ public class WeatherNoteCreateDto
     public int ForecastId { get; set; }
     [Required, StringLength(512)]
     public string Note { get; set; } = string.Empty;
-    [Required]
-    public DateOnly Date { get; set; }
-    
 }
