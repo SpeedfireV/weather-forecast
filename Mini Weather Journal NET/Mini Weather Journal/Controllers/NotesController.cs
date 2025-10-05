@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -42,15 +43,15 @@ public class NotesController: ControllerBase
     }
     
     [HttpGet("date", Name = "GetWeatherNotesByDate")]
-    public async Task<IActionResult> GetWeatherNotesByDate([FromQuery] DateOnly date)
+    public async Task<IActionResult> GetWeatherNotesByDate(GetWeatherNotesByDateDto dto)
     {
         try
         {
             var unauthorized = RequireUser(out _);
             if (unauthorized != null)
                 return unauthorized;
-            var forecast = await _dbContext.WeatherForecasts.FirstAsync(forecast => forecast.Date == date);
-            return Ok(_dbContext.WeatherNotes.Where(note => forecast.Date == date));
+            var forecast = await _dbContext.WeatherForecasts.FirstAsync(forecast => forecast.Date == dto.Date);
+            return Ok(_dbContext.WeatherNotes.AsNoTracking().Where(note => forecast.Date == dto.Date));
         } catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -58,7 +59,7 @@ public class NotesController: ControllerBase
     }
     
     [HttpDelete]
-    public async Task<IActionResult> DeleteWeatherNoteById([FromQuery] int id)
+    public async Task<IActionResult> DeleteWeatherNoteById([FromBody, Required] int id)
     {
         try
         {
