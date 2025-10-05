@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
@@ -62,18 +64,21 @@ public class NotesController: ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddWeatherNote(WeatherNoteCreateDto dto)
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+            return Unauthorized("User not logged in.");
         var note = new WeatherNote
         {
             ForecastId = dto.ForecastId,
             Note = dto.Note,
-            Date = dto.Date
+            Date = dto.Date,
+            UserId = userId
         };
-
-        try
-        {
+        try {
             _dbContext.WeatherNotes.Add(note);
             await _dbContext.SaveChangesAsync();
 

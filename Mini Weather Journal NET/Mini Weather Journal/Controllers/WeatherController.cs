@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
 
 namespace Mini_Weather_Journal.Controllers;
@@ -61,8 +62,15 @@ public class WeatherController: ControllerBase
     
 
     [HttpPost]
-    public async Task<IActionResult> AddWeatherForecast([FromQuery] WeatherForecast weatherForecast)
+    public async Task<IActionResult> AddWeatherForecast(AddWeatherForecastDto dto)
     {
+        var weatherForecast = new WeatherForecast
+        {
+            Date = dto.Date,
+            TemperatureMin = dto.TemperatureMin,
+            TemperatureMax = dto.TemperatureMax,
+            Summary = dto.Summary,
+        };
         try
         {
             if (weatherForecast.Date < DateOnly.FromDateTime(DateTime.Now.Date))

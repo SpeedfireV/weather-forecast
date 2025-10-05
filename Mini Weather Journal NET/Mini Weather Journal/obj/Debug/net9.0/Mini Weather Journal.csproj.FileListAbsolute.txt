@@ -307,3 +307,11 @@ C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weat
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpuwrr.gz
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
