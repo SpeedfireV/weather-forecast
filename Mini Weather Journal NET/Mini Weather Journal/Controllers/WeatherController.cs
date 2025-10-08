@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
@@ -6,6 +7,7 @@ using Mini_Weather_Journal.Models;
 namespace Mini_Weather_Journal.Controllers;
 
 [Route("api/[controller]")]
+[Authorize]
 [ApiController]
 public class WeatherController: ControllerBase
 {
