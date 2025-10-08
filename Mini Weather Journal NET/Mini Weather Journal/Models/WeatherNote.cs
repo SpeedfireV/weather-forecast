@@ -9,11 +9,10 @@ public class WeatherNote
     
     [Required]
     public string UserId { get; set; } = null!; // link to user
-
-
+    
     [Required]
     [StringLength(512)]
-    public string? Note { get; set; } = null!;
+    public string Note { get; set; } = string.Empty;
     
     
     [Required]

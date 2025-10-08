@@ -20,6 +20,7 @@ public class WeatherController: ControllerBase
     
 
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteWeatherForecastById([FromQuery] int id)
     {
         try

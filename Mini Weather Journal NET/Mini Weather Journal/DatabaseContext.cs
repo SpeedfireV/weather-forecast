@@ -16,4 +16,6 @@ public class DatabaseContext: DbContext
     public DbSet<WeatherForecast> WeatherForecasts => Set<WeatherForecast>();
     
     public DbSet<WeatherNote> WeatherNotes => Set<WeatherNote>();
+
+    public DbSet<User> Users => Set<User>();
 }
