@@ -89,6 +89,10 @@ public class NotesController: ControllerBase
             var weatherNote = await _dbContext.WeatherNotes.FindAsync(dto.NoteId);
             if (weatherNote == null)
                 return NotFound("Note not found");
+            if (weatherNote.UserId != userId)
+            {
+                return Unauthorized("Lack of permission to edit this note.");
+            }
             weatherNote.Note = dto.NewNote;
             await _dbContext.SaveChangesAsync();
             return Ok();
