@@ -20,6 +20,7 @@ public class WeatherController: ControllerBase
     
 
     [HttpDelete]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteWeatherForecastById([FromQuery] int id)
     {
         try
@@ -47,6 +48,7 @@ public class WeatherController: ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateWeatherForecast([FromQuery] WeatherForecast weatherForecast)
     {
         try
@@ -64,6 +66,7 @@ public class WeatherController: ControllerBase
     
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddWeatherForecast(AddWeatherForecastDto dto)
     {
         var weatherForecast = new WeatherForecast
@@ -123,7 +126,7 @@ public class WeatherController: ControllerBase
     }
     
     [HttpGet("forecast")]
-    public IActionResult GetWeatherForecast([FromQuery] int days)
+    public IActionResult GetWeatherForecast([FromBody] int days)
     {
         try
         {
@@ -139,7 +142,7 @@ public class WeatherController: ControllerBase
     }
     
     [HttpGet("date")]
-    public IActionResult GetWeatherDate([FromQuery] DateOnly date)
+    public IActionResult GetWeatherDate([FromBody] DateOnly date)
     {
         try
         {
