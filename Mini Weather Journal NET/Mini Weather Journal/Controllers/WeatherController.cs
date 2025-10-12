@@ -49,10 +49,23 @@ public class WeatherController: ControllerBase
 
     [HttpPut]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateWeatherForecast([FromQuery] WeatherForecast weatherForecast)
+    public async Task<IActionResult> UpdateWeatherForecast([FromBody] UpdateWeatherForecastDto dto)
     {
         try
         {
+            WeatherForecast weatherForecast;
+            if (dto.Id != null)
+            {
+             weatherForecast = await _dbContext.WeatherForecasts.FindAsync(dto.Id);   
+            } else if (dto.Date != null)
+            {
+                weatherForecast = await _dbContext.WeatherForecasts.FirstAsync(forecast => forecast.Date == dto.Date);
+            }
+            else
+            {
+                return BadRequest("Invalid request - you must provide either id or date to update.");
+            }
+            
             _dbContext.WeatherForecasts.Update(weatherForecast);
             await _dbContext.SaveChangesAsync();
             return Ok();

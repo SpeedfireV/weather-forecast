@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e097c38d20ea335e72c6ec18e144964bd09875e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e3dd6e91a38b96f4b2ffea9ea93ff6aa8f295c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mini Weather Journal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
