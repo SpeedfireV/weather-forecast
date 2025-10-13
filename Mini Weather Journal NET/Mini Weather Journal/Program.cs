@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mini_Weather_Journal;
+using Mini_Weather_Journal.Jobs;
+using Quartz;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,24 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Controller Mini Weather Journal", Version = "v1" });
 });
+
+// Add Quartz services
+builder.Services.AddQuartz(q =>
+{
+
+    // Define job
+    var jobKey = new JobKey("createNewForecastJob");
+    q.AddJob<CreateNewForecastJob>(opts => opts.WithIdentity(jobKey));
+
+    // Define trigger: daily at midnight
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("newForecast")
+        .WithCronSchedule("0 0 0 * * ?")); // 0 sec, 0 min, 0 hour → every day
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

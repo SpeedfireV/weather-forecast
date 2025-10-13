@@ -315,3 +315,7 @@ C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weat
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.AspNetCore.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.Extensions.DependencyInjection.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.Extensions.Hosting.dll

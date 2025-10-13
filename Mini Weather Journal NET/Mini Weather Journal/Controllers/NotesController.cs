@@ -35,11 +35,17 @@ public class NotesController: ControllerBase
     [HttpGet(Name = "GetWeatherNotes")]
     public async Task<IActionResult> GetWeatherNotes()
     {
-        var unauthorized = RequireUser(out var userId);
-        if (unauthorized != null)
-            return unauthorized;
-        var notes = await _dbContext.WeatherNotes.Where(note => note.UserId == userId).ToListAsync();
-        return Ok(notes);
+        try
+        {
+            var unauthorized = RequireUser(out var userId);
+            if (unauthorized != null)
+                return unauthorized;
+            var notes = await _dbContext.WeatherNotes.Where(note => note.UserId == userId).ToListAsync();
+            return Ok(notes);
+        } catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
     
     [HttpGet("date", Name = "GetWeatherNotesByDate")]
