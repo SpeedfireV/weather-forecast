@@ -6,8 +6,8 @@ public class UpdateWeatherForecastDto
 {
     public int? Id { get; set; }
     public DateOnly? Date { get; set; }
-    public int TemperatatureMin { get; set; }
-    public int TemperatatureMax { get; set; }
-    public string Summary { get; set; } = string.Empty;
+    public int? TemperatureMin { get; set; }
+    public int? TemperatureMax { get; set; }
+    public string? Summary { get; set; } = string.Empty;
     
 }

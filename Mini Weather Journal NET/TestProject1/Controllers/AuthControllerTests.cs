@@ -2,8 +2,6 @@
 
 public class AuthControllerTests
 {
-    private 
-    
     [SetUp]
     public void Setup()
     {

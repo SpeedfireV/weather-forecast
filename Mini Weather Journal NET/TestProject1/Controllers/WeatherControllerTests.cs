@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mini_Weather_Journal;
 using Mini_Weather_Journal.Controllers;
 using Mini_Weather_Journal.DTO;
 using Mini_Weather_Journal.Models;
-using NUnit.Framework;
 
 namespace TestProject1.Controllers;
 
 public class WeatherControllerTests
     {
-       private DatabaseContext _dbContext = null!;
+         private DatabaseContext _dbContext = null!;
         private WeatherController _controller = null!;
 
         [SetUp]
@@ -22,7 +22,7 @@ public class WeatherControllerTests
 
             _dbContext = new DatabaseContext(options);
 
-            // Seed test data
+            // seed 1 record
             _dbContext.WeatherForecasts.Add(new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Today),
@@ -44,19 +44,17 @@ public class WeatherControllerTests
         [Test]
         public async Task GetWeatherToday_ShouldReturnForecast()
         {
+            // act
             var result = await _controller.GetWeatherToday();
 
-            // Assert result type
-            Assert.IsInstanceOf<ActionResult<WeatherForecast>>(result);
-            
+            // assert
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
 
             var okResult = result.Result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-
             var forecast = okResult!.Value as WeatherForecast;
-            Assert.IsNotNull(forecast);
 
-            Assert.AreEqual(DateTime.Today, forecast!.Date.ToDateTime(new TimeOnly()));
+            Assert.That(forecast, Is.Not.Null);
+            Assert.That(forecast!.Date, Is.EqualTo(DateOnly.FromDateTime(DateTime.Today)));
         }
 
         [Test]
@@ -71,21 +69,23 @@ public class WeatherControllerTests
             };
 
             var result = await _controller.AddWeatherForecast(dto);
-            Assert.IsInstanceOf<CreatedResult>(result);
+
+            Assert.That(result, Is.InstanceOf<CreatedResult>());
 
             var addedForecast = _dbContext.WeatherForecasts.FirstOrDefault(f => f.Date == dto.Date);
-            Assert.IsNotNull(addedForecast);
-            Assert.AreEqual(dto.Summary, addedForecast!.Summary);
+            Assert.That(addedForecast, Is.Not.Null);
+            Assert.That(addedForecast!.Summary, Is.EqualTo(dto.Summary));
         }
 
         [Test]
         public async Task DeleteWeatherForecastById_ShouldRemoveForecast()
         {
             var forecast = _dbContext.WeatherForecasts.First();
+
             var result = await _controller.DeleteWeatherForecastById(forecast.Id);
 
-            Assert.IsInstanceOf<OkResult>(result);
-            Assert.IsEmpty(_dbContext.WeatherForecasts.ToList());
+            Assert.That(result, Is.InstanceOf<OkResult>());
+            Assert.That(_dbContext.WeatherForecasts.ToList(), Is.Empty);
         }
 
         [Test]
@@ -101,11 +101,13 @@ public class WeatherControllerTests
             };
 
             var result = await _controller.UpdateWeatherForecast(dto);
-            Assert.IsInstanceOf<OkResult>(result);
+
+            Assert.That(result, Is.InstanceOf<OkResult>());
 
             var updatedForecast = _dbContext.WeatherForecasts.First();
-            Assert.AreEqual("Rainy", updatedForecast.Summary);
-            Assert.AreEqual(0, updatedForecast.TemperatureMin);
-            Assert.AreEqual(25, updatedForecast.TemperatureMax);
+            Assert.That(updatedForecast.Summary, Is.EqualTo("Rainy"));
+            Assert.That(updatedForecast.TemperatureMin, Is.EqualTo(0));
+            Assert.That(updatedForecast.TemperatureMax, Is.EqualTo(25));
         }
-    }
+        }
+    

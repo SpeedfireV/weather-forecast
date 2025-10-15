@@ -56,18 +56,33 @@ public class WeatherController: ControllerBase
             WeatherForecast weatherForecast;
             if (dto.Id != null)
             {
-             weatherForecast = await _dbContext.WeatherForecasts.FindAsync(dto.Id);   
-            } else if (dto.Date != null)
+                weatherForecast = await _dbContext.WeatherForecasts.FindAsync(dto.Id);
+            }
+            else if (dto.Date != null)
             {
-                weatherForecast = await _dbContext.WeatherForecasts.FirstAsync(forecast => forecast.Date == dto.Date);
+                weatherForecast = await _dbContext.WeatherForecasts
+                    .FirstAsync(forecast => forecast.Date == dto.Date);
             }
             else
             {
                 return BadRequest("Invalid request - you must provide either id or date to update.");
             }
-            
+
+            if (weatherForecast == null)
+                return NotFound("Weather forecast not found.");
+
+            if (dto.TemperatureMin.HasValue)
+                weatherForecast.TemperatureMin = dto.TemperatureMin.Value;
+
+            if (dto.TemperatureMax.HasValue)
+                weatherForecast.TemperatureMax = dto.TemperatureMax.Value;
+
+            if (!string.IsNullOrEmpty(dto.Summary))
+                weatherForecast.Summary = dto.Summary;
+
             _dbContext.WeatherForecasts.Update(weatherForecast);
             await _dbContext.SaveChangesAsync();
+
             return Ok();
         }
         catch (DbUpdateException e)

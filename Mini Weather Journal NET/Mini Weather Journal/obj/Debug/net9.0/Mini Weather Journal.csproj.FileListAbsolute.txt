@@ -319,3 +319,10 @@ C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weat
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.AspNetCore.dll
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.Extensions.DependencyInjection.dll
 C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Quartz.Extensions.Hosting.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\nunit.framework.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\nunit.framework.legacy.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\xunit.abstractions.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\xunit.assert.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\xunit.core.dll
+C:\Users\grzeg\RiderProjects\weather-forecast\Mini Weather Journal NET\Mini Weather Journal\bin\Debug\net9.0\xunit.execution.dotnet.dll
