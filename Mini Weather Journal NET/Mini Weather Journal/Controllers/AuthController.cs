@@ -89,7 +89,7 @@ public class AuthController : ControllerBase
             }
             var passwordHasher = new PasswordHasher<User>();
             string storedHash = user.PasswordHash;
-            var result = passwordHasher.VerifyHashedPassword(null, storedHash, dto.Password);
+            var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
             {
                 return Unauthorized("Invalid credentials.");
